@@ -137,11 +137,39 @@ class Graph:
 
     def dfs(self, starting_vertex, destination_vertex):
         """
-        Return a list containing a path from
+        Return a list containing the shortest path from
         starting_vertex to destination_vertex in
-        depth-first order.
+        breath-first order.
         """
-        pass  # TODO
+        # create an empty stack and push PATH to the starting Vertex ID
+        s = Stack()
+        s.push([starting_vertex])
+        # create a set to store visited vertices
+        visited = set()
+        #while stack is not empty 
+        while s.size() > 0:
+            # dq the first PATH (list)
+            path = s.pop()
+            # grab the last vertex from the PATH
+            v = path[-1]
+            # check if the vertex has not been visited
+            if v not in visited:
+                # is this the destination
+                if v == destination_vertex:
+                    # return path
+                    return path
+                # mark as visited
+                visited.add(v)
+                # then add a path to its neighbors to the top of the Stack
+                for next_v in self.get_neighbors(v):
+                    # make a copy of the path
+                    path_copy = list(path)
+                    # append neighbor to the back
+                    path_copy.append(next_v)
+                    # push new path
+                    s.push(path_copy)
+        return None
+
 
     def dfs_recursive(self, starting_vertex, destination_vertex):
         """
